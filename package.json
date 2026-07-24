@@ -1,0 +1,28 @@
+{
+  "name": "@vibecodeqa/ref-node-cli-internal-tool",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "vcqa-ref-node-cli": "./dist/cli.js"
+  },
+  "packageManager": "pnpm@10.17.1",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node scripts/make-executable.mjs",
+    "dev": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "smoke": "node dist/cli.js health --env dev --json && node dist/cli.js tenants sync --env prod --json; test $? -eq 4",
+    "ci": "pnpm typecheck && pnpm test && pnpm build && pnpm smoke"
+  },
+  "dependencies": {
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "tsx": "^4.21.0",
+    "typescript": "^5.7.3",
+    "vitest": "^3.2.4"
+  }
+}
+
